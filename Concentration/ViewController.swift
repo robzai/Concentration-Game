@@ -12,7 +12,12 @@ class ViewController: UIViewController {
     
     //this is a model, will be used by controller when controller needs
     //to talk to model.
-    lazy var game: Concentration = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
+    lazy var game: Concentration = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
+    var numberOfPairsOfCards: Int {
+        get{
+            return (cardButtons.count + 1) / 2
+        }
+    }
     
     //Swift require all instant variables/properties be initialized
     var flipCount = 0 {

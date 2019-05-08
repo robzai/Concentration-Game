@@ -14,7 +14,28 @@ class Concentration {
     
     var cards = [Card]()
     
-    var indexOfOneAndOnlyFaceupCard: Int?
+    var indexOfOneAndOnlyFaceupCard: Int? {
+        get {
+            var foundIndex: Int?
+            for index in cards.indices{
+                if cards[index].isFaceUp {
+                    if foundIndex == nil {
+                        foundIndex = index
+                    } else {
+                        //if we found more than one face up card...should never goes here
+                        return nil
+                    }
+                }
+            }
+            return foundIndex
+        }
+        set {
+            //tuen all cards face down except the 'indexOfOneAndOnlyFaceupCard' one
+            for index in cards.indices {
+                cards[index].isFaceUp = (index == newValue)
+            }
+        }
+    }
     
     func chooseCard(at index: Int){
 //        if cards[index].isFaceUp {
@@ -33,14 +54,16 @@ class Concentration {
                     cards[index].isMatched = true
                 }
                 cards[index].isFaceUp = true
-                indexOfOneAndOnlyFaceupCard = nil
+//                indexOfOneAndOnlyFaceupCard = nil
             } else {
                 //1. no card is face up when user choose a card, then flip it face up
                 //2. 2 cards are face up eather matching or not matching, if that's true, when user choose another card, flip those cards face down, and the chosen on face up
-                for flipDownIndex in cards.indices {
-                    cards[flipDownIndex].isFaceUp = false
-                }
-                cards[index].isFaceUp = true
+                
+                //these 4 lines of code below now is hadled by computed property
+//                for flipDownIndex in cards.indices {
+//                    cards[flipDownIndex].isFaceUp = false
+//                }
+//                cards[index].isFaceUp = true
                 indexOfOneAndOnlyFaceupCard = index
             }
         }
