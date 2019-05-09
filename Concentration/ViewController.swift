@@ -12,7 +12,8 @@ class ViewController: UIViewController {
     
     //this is a model, will be used by controller when controller needs
     //to talk to model.
-    lazy var game: Concentration = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
+    private lazy var game: Concentration = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
+    
     var numberOfPairsOfCards: Int {
         get{
             return (cardButtons.count + 1) / 2
@@ -20,7 +21,7 @@ class ViewController: UIViewController {
     }
     
     //Swift require all instant variables/properties be initialized
-    var flipCount = 0 {
+    private(set) var flipCount = 0 {
         //property observer, everytime this var changes, it's going to
         //exectue the didSet
         didSet{
@@ -30,13 +31,13 @@ class ViewController: UIViewController {
     
     //a controller talk to a view through outlet, so when sth is updated
     //in a controller, we can change the view responsibly
-    @IBOutlet weak var flipCountLabel: UILabel!
+    @IBOutlet private weak var flipCountLabel: UILabel!
     
     //this is a outlet collection
-    @IBOutlet var cardButtons: [UIButton]!
+    @IBOutlet private var cardButtons: [UIButton]!
     
     //a view talks to a controller through 'action'
-    @IBAction func tuchCard(_ sender: UIButton) {
+    @IBAction private func tuchCard(_ sender: UIButton) {
         flipCount = flipCount + 1
         if let cardNumber = cardButtons.firstIndex(of: sender){
             //flipCard(withEmoji: emojiChoices[cardNumber], on: sender)
@@ -51,7 +52,7 @@ class ViewController: UIViewController {
         
     }
     
-    func updateViewFromModel() {
+    private func updateViewFromModel() {
         for index in 0..<cardButtons.count {
             let button = cardButtons[index]
             let card = game.cards[index]
@@ -66,11 +67,11 @@ class ViewController: UIViewController {
         }
     }
     
-    var emojiChoices = ["🎃","👻","👽","😈","👾","🌈"]
+    private var emojiChoices = ["🎃","👻","👽","😈","👾","🌈"]
     
-    var emoji = Dictionary<Int,String>()
+    private var emoji = Dictionary<Int,String>()
     
-    func emoji(for card: Card) -> String {
+    private func emoji(for card: Card) -> String {
         //if this emoji for that card is currently nil, then put an emoji
         //in the dictionary for that card
         if emoji[card.identifier] == nil {

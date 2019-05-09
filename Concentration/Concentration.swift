@@ -12,9 +12,9 @@ import Foundation
 //vars are initialized.
 class Concentration {
     
-    var cards = [Card]()
+    private(set) var cards = [Card]()
     
-    var indexOfOneAndOnlyFaceupCard: Int? {
+    private var indexOfOneAndOnlyFaceupCard: Int? {
         get {
             var foundIndex: Int?
             for index in cards.indices{
@@ -44,6 +44,8 @@ class Concentration {
 //            cards[index].isFaceUp = true
 //        }
         
+        //when you assert something could be true, and if it's not the program crash and print out an error. Assertions crash your program while develement, but they are ignore when you ship to the App Store
+        assert(cards.indices.contains(index), "Concentration.chooseCard(at: \(index) : chonsen index not in the cards")
         //ignore card that is already been matched
         if !cards[index].isMatched {
             //there is one card face up, and now need to match
@@ -70,6 +72,7 @@ class Concentration {
     }
     
     init(numberOfPairsOfCards: Int){
+        assert(numberOfPairsOfCards > 0 , "Concentration.init(\(numberOfPairsOfCards)) : must have at least one pair of cards")
         //'_' in Swift means ignore this, I am not going to use this
         for _ in 0..<numberOfPairsOfCards{
             let card = Card()
