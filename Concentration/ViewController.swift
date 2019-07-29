@@ -52,6 +52,13 @@ class ViewController: UIViewController {
         
     }
     
+    @IBAction func tuchNewGame(_ sender: UIButton) {
+        game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
+        flipCount = 0
+        updateViewFromModel()
+    }
+    
+    
     private func updateViewFromModel() {
         for index in 0..<cardButtons.count {
             let button = cardButtons[index]
@@ -67,7 +74,7 @@ class ViewController: UIViewController {
         }
     }
     
-    private var emojiChoices = ["🎃","👻","👽","😈","👾","🌈"]
+    private var emojiChoices = ["🎃","👻","👽","😈","👾","🌈","🤪","👿"]
     
     private var emoji = Dictionary<Int,String>()
     
