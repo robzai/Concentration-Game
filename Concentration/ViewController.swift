@@ -76,9 +76,8 @@ class ViewController: UIViewController {
         //in the dictionary for that card
         if emoji[card.identifier] == nil {
             if emojiChoices.count > 0{
-                let randomIndex = Int(arc4random_uniform(UInt32(emojiChoices.count)))
                 //use remove to prevent duplicate emoji in dictionary
-                emoji[card.identifier] = emojiChoices.remove(at: randomIndex)
+                emoji[card.identifier] = emojiChoices.remove(at: emojiChoices.count.arc4random)
             }
         }
         
@@ -108,3 +107,14 @@ class ViewController: UIViewController {
     
 }
 
+extension Int {
+    var arc4random: Int {
+        if self > 0{
+            return Int(arc4random_uniform(UInt32(self)))
+        } else if self < 0 {
+            return Int(arc4random_uniform(UInt32(abs(self))))
+        } else  {
+            return 0
+        }
+    }
+}

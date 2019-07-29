@@ -10,7 +10,7 @@ import Foundation
 
 //Class get a free init() with no arguments as long as all their
 //vars are initialized.
-class Concentration {
+struct Concentration {
     
     private(set) var cards = [Card]()
     
@@ -37,7 +37,8 @@ class Concentration {
         }
     }
     
-    func chooseCard(at index: Int){
+    //only functions we need to put mutating on while using struct. This is because struct is value type, and it gets copy whil passing around using copy on write semantic, so we care when it is mutating.
+    mutating func chooseCard(at index: Int){
 //        if cards[index].isFaceUp {
 //            cards[index].isFaceUp = false
 //        } else {
