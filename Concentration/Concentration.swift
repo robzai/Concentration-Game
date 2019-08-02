@@ -84,8 +84,8 @@ struct Concentration {
             cards.append(card)
             cards.append(matchingCard)
             
-            //TODO: Shuffle the cards
-            
+            //Shuffle the cards
+            cards.shuffle()
         }
     }
     

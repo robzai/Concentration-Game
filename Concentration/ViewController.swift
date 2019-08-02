@@ -55,6 +55,7 @@ class ViewController: UIViewController {
     @IBAction func tuchNewGame(_ sender: UIButton) {
         game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
         flipCount = 0
+        emojiChoices = ["🎃","👻","👽","😈","👾","🌈","🤪","👿"]
         updateViewFromModel()
     }
     
