@@ -14,6 +14,12 @@ struct Concentration {
     
     private(set) var cards = [Card]()
     
+    private(set) var score = 0
+    
+    private(set) var flipCount = 0
+    
+    private(set) var mismatchedCardsIndexes = Set<Int>()
+    
     private var indexOfOneAndOnlyFaceupCard: Int? {
         get {
             var foundIndex: Int?
@@ -30,7 +36,7 @@ struct Concentration {
             return foundIndex
         }
         set {
-            //tuen all cards face down except the 'indexOfOneAndOnlyFaceupCard' one
+            //turn all cards face down except the 'indexOfOneAndOnlyFaceupCard' one
             for index in cards.indices {
                 cards[index].isFaceUp = (index == newValue)
             }
@@ -47,18 +53,36 @@ struct Concentration {
         
         //when you assert something could be true, and if it's not the program crash and print out an error. Assertions crash your program while develement, but they are ignore when you ship to the App Store
         assert(cards.indices.contains(index), "Concentration.chooseCard(at: \(index) : chonsen index not in the cards")
+        flipCount += 1
         //ignore card that is already been matched
         if !cards[index].isMatched {
+            //the 2nd, 4th, 6th... touche go in here
             //there is one card face up, and now need to match
             if let matchIndex = indexOfOneAndOnlyFaceupCard, matchIndex != index {
+                
                 //check if card match
                 if cards[matchIndex].identifier == cards[index].identifier {
                     cards[matchIndex].isMatched = true
                     cards[index].isMatched = true
+                    // increase score if cards are match
+                    score += 2
+                } else {
+                    //decrease score if cards not match and cards had already been seen before
+                    if mismatchedCardsIndexes.contains(matchIndex) {
+                        score -= 1
+                    }
+                    if mismatchedCardsIndexes.contains(index){
+                        score -= 1
+                    }
+                    mismatchedCardsIndexes.insert(matchIndex)
+                    mismatchedCardsIndexes.insert(index)
+                    
                 }
                 cards[index].isFaceUp = true
-//                indexOfOneAndOnlyFaceupCard = nil
+                //indexOfOneAndOnlyFaceupCard = nil
+                
             } else {
+                //the 1st, 3rd, 5th, touch goes in here
                 //1. no card is face up when user choose a card, then flip it face up
                 //2. 2 cards are face up eather matching or not matching, if that's true, when user choose another card, flip those cards face down, and the chosen on face up
                 

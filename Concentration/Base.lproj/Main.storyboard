@@ -189,14 +189,23 @@
                                     <action selector="tuchNewGame:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jPb-9I-5yt"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fbg-cC-0YQ">
+                                <rect key="frame" x="16.000000000000007" y="680" width="107.66666666666669" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="feG-IQ-mLM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="8S9-SR-va2"/>
                             <constraint firstItem="cDW-QS-nII" firstAttribute="trailing" secondItem="feG-IQ-mLM" secondAttribute="trailing" id="99b-Fn-FnM"/>
                             <constraint firstItem="feG-IQ-mLM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Dih-nz-WmF"/>
+                            <constraint firstItem="9OC-Yx-qYA" firstAttribute="top" secondItem="Fbg-cC-0YQ" secondAttribute="bottom" constant="20" id="QXg-7m-biX"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="9OC-Yx-qYA" secondAttribute="bottom" constant="6" id="QeR-WR-FfI"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Fbg-cC-0YQ" secondAttribute="trailing" symbolic="YES" id="VXl-e9-HCZ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="feG-IQ-mLM" secondAttribute="trailing" constant="16" id="WYL-NX-3S0"/>
+                            <constraint firstItem="Fbg-cC-0YQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="c5j-Om-OQh"/>
                             <constraint firstItem="cDW-QS-nII" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9OC-Yx-qYA" secondAttribute="trailing" constant="8" symbolic="YES" id="hQo-zZ-1t3"/>
                             <constraint firstItem="9OC-Yx-qYA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="kfZ-DP-Jj0"/>
                             <constraint firstItem="cDW-QS-nII" firstAttribute="top" secondItem="9OC-Yx-qYA" secondAttribute="top" id="kyk-c2-Hhh"/>
@@ -205,6 +214,7 @@
                     </view>
                     <connections>
                         <outlet property="flipCountLabel" destination="9OC-Yx-qYA" id="80S-RZ-P3Q"/>
+                        <outlet property="scoreLabel" destination="Fbg-cC-0YQ" id="9qa-gd-DOT"/>
                         <outletCollection property="cardButtons" destination="FKO-xZ-j6P" collectionClass="NSMutableArray" id="JSg-Ab-BG4"/>
                         <outletCollection property="cardButtons" destination="1vI-AA-7kA" collectionClass="NSMutableArray" id="DPj-ME-i8r"/>
                         <outletCollection property="cardButtons" destination="aaM-1C-jKC" collectionClass="NSMutableArray" id="Vxh-B3-gdn"/>

@@ -21,29 +21,44 @@ class ViewController: UIViewController {
     }
     
     //Swift require all instant variables/properties be initialized
-    private(set) var flipCount = 0 {
-        //property observer, everytime this var changes, it's going to
-        //exectue the didSet
-        didSet{
-            flipCountLabel.text = "Flips: \(flipCount)"
-        }
-    }
+    //flipCount has been moved to Concentration(the model)
+//    private(set) var flipCount = 0 {
+//        //property observer, everytime this var changes, it's going to
+//        //exectue the didSet
+//        didSet{
+//            flipCountLabel.text = "Flips: \(flipCount)"
+//        }
+//    }
+    
+//    private var emojiChoices = ["🎃","👻","👽","😈","👾","🌈","🤪","👿"]
+    private var emojiThemeChoices: Dictionary<String,[String]> = [
+        "animals": ["🐶","🐱","🐴","🦊","🐺","🐼","🐨","🐯","🦁"],
+        "faces":   ["😆","🙃","😶","😅","🙄","😑","🤣","😷","😂"],
+        "foods":   ["🌭","🥨","🥖","🍞","🥓","🥞","🥐","🥯","🍔"]
+    ]
+    lazy var emojiChoices = emojiThemeChoices.randomElement()?.value ?? []
+    
+    private var emoji = Dictionary<Int,String>()
     
     //a controller talk to a view through outlet, so when sth is updated
     //in a controller, we can change the view responsibly
     @IBOutlet private weak var flipCountLabel: UILabel!
+    
+    @IBOutlet weak var scoreLabel: UILabel!
     
     //this is a outlet collection
     @IBOutlet private var cardButtons: [UIButton]!
     
     //a view talks to a controller through 'action'
     @IBAction private func tuchCard(_ sender: UIButton) {
-        flipCount = flipCount + 1
+        //flipCount has been moved to Concentration(the model)
+        //flipCount = flipCount + 1
         if let cardNumber = cardButtons.firstIndex(of: sender){
             //flipCard(withEmoji: emojiChoices[cardNumber], on: sender)
             
             //controller tells model which card is chosen
             game.chooseCard(at: cardNumber)
+            
             //redarw/update all cards/buttons in the view each time a card is tuched
             updateViewFromModel()
         } else {
@@ -54,8 +69,8 @@ class ViewController: UIViewController {
     
     @IBAction func tuchNewGame(_ sender: UIButton) {
         game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
-        flipCount = 0
-        emojiChoices = ["🎃","👻","👽","😈","👾","🌈","🤪","👿"]
+//        flipCount = 0
+        emojiChoices = emojiThemeChoices.randomElement()?.value ?? []
         updateViewFromModel()
     }
     
@@ -72,13 +87,12 @@ class ViewController: UIViewController {
                 button.setTitle("", for: UIControl.State.normal)
                 button.backgroundColor = card.isMatched ?  #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
             }
+            
+            scoreLabel.text = "Score: \(game.score)"
+            flipCountLabel.text = "Flips: \(game.flipCount)"
         }
     }
-    
-    private var emojiChoices = ["🎃","👻","👽","😈","👾","🌈","🤪","👿"]
-    
-    private var emoji = Dictionary<Int,String>()
-    
+
     private func emoji(for card: Card) -> String {
         //if this emoji for that card is currently nil, then put an emoji
         //in the dictionary for that card
