@@ -38,7 +38,7 @@ class ViewController: UIViewController {
     ]
     lazy var emojiChoices = emojiThemeChoices.randomElement()?.value ?? []
     
-    private var emoji = Dictionary<Int,String>()
+    private var emoji = Dictionary<Card,String>()
     
     //a controller talk to a view through outlet, so when sth is updated
     //in a controller, we can change the view responsibly
@@ -96,10 +96,10 @@ class ViewController: UIViewController {
     private func emoji(for card: Card) -> String {
         //if this emoji for that card is currently nil, then put an emoji
         //in the dictionary for that card
-        if emoji[card.identifier] == nil {
+        if emoji[card] == nil {
             if emojiChoices.count > 0{
                 //use remove to prevent duplicate emoji in dictionary
-                emoji[card.identifier] = emojiChoices.remove(at: emojiChoices.count.arc4random)
+                emoji[card] = emojiChoices.remove(at: emojiChoices.count.arc4random)
             }
         }
         
@@ -109,7 +109,7 @@ class ViewController: UIViewController {
         //} else {
         //    return "?"
         //}
-        return emoji[card.identifier] ?? "?"
+        return emoji[card] ?? "?"
     }
     
 //    func flipCard(withEmoji emoji: String, on button: UIButton) {

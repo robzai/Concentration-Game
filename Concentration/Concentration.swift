@@ -61,7 +61,8 @@ struct Concentration {
             if let matchIndex = indexOfOneAndOnlyFaceupCard, matchIndex != index {
                 
                 //check if card match
-                if cards[matchIndex].identifier == cards[index].identifier {
+//                if cards[matchIndex].identifier == cards[index].identifier {
+                if cards[matchIndex] == cards[index] {
                     cards[matchIndex].isMatched = true
                     cards[index].isMatched = true
                     // increase score if cards are match
