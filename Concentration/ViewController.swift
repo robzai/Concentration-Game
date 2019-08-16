@@ -42,7 +42,11 @@ class ViewController: UIViewController {
     
     //a controller talk to a view through outlet, so when sth is updated
     //in a controller, we can change the view responsibly
-    @IBOutlet private weak var flipCountLabel: UILabel!
+    @IBOutlet private weak var flipCountLabel: UILabel! {
+        didSet {
+            updateFlipCountLable()
+        }
+    }
     
     @IBOutlet weak var scoreLabel: UILabel!
     
@@ -74,6 +78,14 @@ class ViewController: UIViewController {
         updateViewFromModel()
     }
     
+    private func updateFlipCountLable() {
+        let attributes: [NSAttributedString.Key:Any] = [
+            .strokeWidth : 5.0,
+            .strokeColor : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+        ]
+        let attributedString = NSAttributedString(string: "Flips: \(game.flipCount)", attributes: attributes)
+        flipCountLabel.attributedText = attributedString
+    }
     
     private func updateViewFromModel() {
         for index in 0..<cardButtons.count {
@@ -89,7 +101,8 @@ class ViewController: UIViewController {
             }
             
             scoreLabel.text = "Score: \(game.score)"
-            flipCountLabel.text = "Flips: \(game.flipCount)"
+//            flipCountLabel.text = "Flips: \(game.flipCount)"
+            updateFlipCountLable()
         }
     }
 
