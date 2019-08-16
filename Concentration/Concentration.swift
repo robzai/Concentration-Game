@@ -22,18 +22,25 @@ struct Concentration {
     
     private var indexOfOneAndOnlyFaceupCard: Int? {
         get {
-            var foundIndex: Int?
-            for index in cards.indices{
-                if cards[index].isFaceUp {
-                    if foundIndex == nil {
-                        foundIndex = index
-                    } else {
-                        //if we found more than one face up card...should never goes here
-                        return nil
-                    }
-                }
-            }
-            return foundIndex
+        
+//            var foundIndex: Int?
+//            for index in cards.indices{
+//                if cards[index].isFaceUp {
+//                    if foundIndex == nil {
+//                        foundIndex = index
+//                    } else {
+//                        //if we found more than one face up card...should never goes here
+//                        return nil
+//                    }
+//                }
+//            }
+//            return foundIndex
+            
+//            let faceUpCardIndices = cards.indices.filter( { cards[$0].isFaceUp } )
+//            return faceUpCardIndices.count == 1 ? faceUpCardIndices.first : nil
+            
+            //oneAndOnly is a user defined extension within Collection. Look at the end of this file
+            return cards.indices.filter( { cards[$0].isFaceUp } ).oneAndOnly
         }
         set {
             //turn all cards face down except the 'indexOfOneAndOnlyFaceupCard' one
@@ -114,4 +121,12 @@ struct Concentration {
         }
     }
     
+}
+
+
+extension Collection {
+    var oneAndOnly: Element? {
+        //count and first here is collection mathod (collection.count collection.first)
+        return count == 1 ? first : nil
+    }
 }
