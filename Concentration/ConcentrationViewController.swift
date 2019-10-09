@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ConcentrationViewController: UIViewController {
     
     //this is a model, will be used by controller when controller needs
     //to talk to model.
@@ -31,13 +31,23 @@ class ViewController: UIViewController {
 //    }
     
 //    private var emojiChoices = ["🎃","👻","👽","😈","👾","🌈","🤪","👿"]
-    private var emojiThemeChoices: Dictionary<String,[String]> = [
-        "animals": ["🐶","🐱","🐴","🦊","🐺","🐼","🐨","🐯","🦁"],
-        "faces":   ["😆","🙃","😶","😅","🙄","😑","🤣","😷","😂"],
-        "foods":   ["🌭","🥨","🥖","🍞","🥓","🥞","🥐","🥯","🍔"]
-    ]
-    lazy var emojiChoices = emojiThemeChoices.randomElement()?.value ?? []
+//    private var emojiThemeChoices: Dictionary<String,[String]> = [
+//        "animals": ["🐶","🐱","🐴","🦊","🐺","🐼","🐨","🐯","🦁"],
+//        "faces":   ["😆","🙃","😶","😅","🙄","😑","🤣","😷","😂"],
+//        "foods":   ["🌭","🥨","🥖","🍞","🥓","🥞","🥐","🥯","🍔"]
+//    ]
+//    lazy var emojiChoices = emojiThemeChoices.randomElement()?.value ?? []
     
+    //each time a theme is set, reset emojiChoices and emoji
+    var theme: [String]? = [] {
+        didSet {
+            emojiChoices = theme ?? []
+            emoji = [:]
+            updateViewFromModel()
+        }
+    }
+    
+    private var emojiChoices = ["😆","🙃","😶","😅","🙄","😑","🤣","😷","😂"]
     private var emoji = Dictionary<Card,String>()
     
     //a controller talk to a view through outlet, so when sth is updated
@@ -74,7 +84,7 @@ class ViewController: UIViewController {
     @IBAction func tuchNewGame(_ sender: UIButton) {
         game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
 //        flipCount = 0
-        emojiChoices = emojiThemeChoices.randomElement()?.value ?? []
+//        emojiChoices = emojiThemeChoices.randomElement()?.value ?? []
         updateViewFromModel()
     }
     
@@ -88,21 +98,24 @@ class ViewController: UIViewController {
     }
     
     private func updateViewFromModel() {
-        for index in 0..<cardButtons.count {
-            let button = cardButtons[index]
-            let card = game.cards[index]
-            
-            if card.isFaceUp {
-                button.setTitle(emoji(for: card), for: UIControl.State.normal)
-                button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            } else {
-                button.setTitle("", for: UIControl.State.normal)
-                button.backgroundColor = card.isMatched ?  #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+        //this if statement protect your code that can be called when your MVC is being prepared
+        if cardButtons != nil {
+            for index in 0..<cardButtons.count {
+                let button = cardButtons[index]
+                let card = game.cards[index]
+                
+                if card.isFaceUp {
+                    button.setTitle(emoji(for: card), for: UIControl.State.normal)
+                    button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                } else {
+                    button.setTitle("", for: UIControl.State.normal)
+                    button.backgroundColor = card.isMatched ?  #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+                }
+                
+                scoreLabel.text = "Score: \(game.score)"
+                //            flipCountLabel.text = "Flips: \(game.flipCount)"
+                updateFlipCountLable()
             }
-            
-            scoreLabel.text = "Score: \(game.score)"
-//            flipCountLabel.text = "Flips: \(game.flipCount)"
-            updateFlipCountLable()
         }
     }
 
